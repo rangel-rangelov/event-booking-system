@@ -2,10 +2,31 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+1. First make sure your are using the correct version of Node.js listed in the `.nvmrc` file. If you are using NVM, you can switch to that version by running:
+```bash
+nvm use
+```
+2. In order to install the correct package manager. In this case `yarn`. Run the following commands:
+```bash
+corepack enable
+corepack install
+```
+3. To install the project dependencies run the following command:
+```bash
+yarn
+```
+
+4. Make a copy of the `.env` file and rename it to `.env.local`. Then setup your environment variables by filling the listed variables.
+
+5. Make sure to update your type definitions by running:
 
 ```bash
-npm run dev
+yarn sanity:types
+```
+
+6. To start the project run:
+```bash
+yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
