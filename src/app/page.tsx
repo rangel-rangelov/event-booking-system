@@ -1,6 +1,26 @@
+"use client";
+
+import { urlFor } from "@/sanity/lib/image";
+import { getEvents } from "@/sanity/queries/events";
+import { Event as EventType } from "@/sanity/types/types";
 import Image from "next/image";
 
+import { useEffect, useState } from "react";
+
 export default function Home() {
+  const [events, setEvents] = useState<EventType[]>([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const events = await getEvents();
+
+      setEvents(events as EventType[]);
+    };
+
+    fetch();
+  }, []);
+
+  console.log(events);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -17,11 +37,11 @@ export default function Home() {
           >
             By{" "}
             <Image
-              src="/vercel.svg"
+              src={"/vercel.svg"}
               alt="Vercel Logo"
               className="dark:invert"
-              width={100}
-              height={24}
+              width={400}
+              height={500}
               priority
             />
           </a>
@@ -38,6 +58,19 @@ export default function Home() {
           priority
         />
       </div>
+
+      {events.map(
+        (event) =>
+          event.image && (
+            <Image
+              key={event._id}
+              src={urlFor(event.image).url()}
+              alt={event.image.description || ""}
+              width={500}
+              height={500}
+            />
+          )
+      )}
 
       <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
         <a

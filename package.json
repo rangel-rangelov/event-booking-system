@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sanity:schema": "sanity schema extract --enforce-required-fields --path ./src/sanity/types/schema.json",
+    "sanity:typegen": "sanity typegen generate",
+    "sanity:types": "npm run sanity:schema && npm run sanity:typegen"
   },
   "dependencies": {
     "@sanity/image-url": "^1.0.2",

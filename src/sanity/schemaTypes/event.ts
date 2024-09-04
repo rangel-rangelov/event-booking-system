@@ -9,11 +9,13 @@ export const eventSchema = defineType({
             name: 'title',
             title: 'Title',
             type: 'string',
+            validation: rule => rule.required(),
         }),
         defineField({
             name: 'slug',
             title: 'Slug',
             type: 'slug',
+            validation: rule => rule.required(),
             options: { source: 'title' },
         }),
         defineField({
@@ -38,12 +40,14 @@ export const eventSchema = defineType({
             name: 'timestamp',
             title: 'When',
             type: 'datetime',
+            validation: rule => rule.required(),
         }),
         defineField({
             name: 'location',
             title: 'Where',
             // Note: Geopoint can be used as type here, but the UI is not user friendly.
             type: 'string',
+            validation: rule => rule.required(),
         }),
     ],
 });
