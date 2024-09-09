@@ -63,7 +63,7 @@
   },
   "overrides": [
     {
-      "files": ["app/**/{page,layout,not-found}.tsx", "sanity.*.ts", "tailwind.config.ts", "postcss.config.mjs"],
+      "files": ["app/**/{page,layout,not-found}.tsx", "sanity.*.ts", "tailwind.config.ts", "postcss.config.mjs", "auth.config.ts", "middleware.ts"],
       "rules": {
         "import/no-default-export": "off"
       }

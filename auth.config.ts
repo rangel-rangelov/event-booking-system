@@ -43,4 +43,22 @@ export default {
       },
     }),
   ],
+  callbacks: {
+    // eslint-disable-next-line @typescript-eslint/typedef, @typescript-eslint/explicit-function-return-type
+    jwt({ token, user }) {
+      if (user) {
+        // eslint-disable-next-line no-param-reassign
+        token.role = user.role;
+      }
+      return token;
+    },
+    // eslint-disable-next-line @typescript-eslint/typedef, @typescript-eslint/explicit-function-return-type
+    session({ session, token }) {
+      if (token) {
+        // eslint-disable-next-line no-param-reassign
+        session.user.role = token.role;
+      }
+      return session;
+    },
+  },
 } satisfies NextAuthConfig;
