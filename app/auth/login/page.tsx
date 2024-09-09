@@ -1,4 +1,4 @@
-import { LoginForm } from '@/components/blocks/login';
+import { LoginForm } from '@/components/organisms/login';
 
 const Login = (): JSX.Element => {
   return (

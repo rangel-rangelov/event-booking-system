@@ -1,4 +1,4 @@
-import { RegisterForm } from '@/components/blocks/register';
+import { RegisterForm } from '@/components/organisms/register';
 
 const Register = (): JSX.Element => {
   return (

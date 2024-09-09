@@ -9,13 +9,17 @@ import { registerSchema } from '@/lib/zod';
 import type { loginSchema } from '@/lib/zod';
 import type { z } from 'zod';
 
-export const loginAction = async (values: z.infer<typeof loginSchema>) => {
+export const loginAction = async (
+  values: z.infer<typeof loginSchema>,
+): Promise<{ success?: boolean; error?: string }> => {
   try {
     await signIn('credentials', {
       email: values.email,
       password: values.password,
       redirect: false,
     });
+
+    return { success: true };
   } catch (error) {
     if (error instanceof AuthError) {
       return { error: error.cause?.err?.message };
@@ -27,7 +31,7 @@ export const loginAction = async (values: z.infer<typeof loginSchema>) => {
 
 export const registerAction = async (
   values: z.infer<typeof registerSchema>,
-) => {
+): Promise<{ success?: boolean; error?: string }> => {
   try {
     const { data, success } = registerSchema.safeParse(values);
 

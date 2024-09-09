@@ -50,7 +50,7 @@ export const LoginForm = (): JSX.Element => {
       if (response?.error) {
         setError(response.error);
       } else {
-        router.push('/');
+        router.push('/dashboard/events');
       }
     });
   };
@@ -101,7 +101,7 @@ export const LoginForm = (): JSX.Element => {
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{' '}
           <Link href="/auth/register" className="underline">
-            Sign-in
+            Sign-up
           </Link>
         </div>
       </CardContent>

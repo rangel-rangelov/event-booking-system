@@ -1,3 +1,4 @@
+import { TooltipProvider } from '@radix-ui/react-tooltip';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import type { Metadata } from 'next';
@@ -13,7 +14,9 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: Readonly<PropsWithChildren>): JSX.Element => {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <TooltipProvider>{children}</TooltipProvider>
+      </body>
     </html>
   );
 };
