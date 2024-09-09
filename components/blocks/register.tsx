@@ -1,19 +1,20 @@
-"use client";
+'use client';
 
-import { useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-
+import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import { registerAction } from '@/actions/auth';
+import { registerSchema } from '../../lib/zod';
+import { Button } from '../ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from '../ui/card';
 import {
   Form,
   FormControl,
@@ -21,13 +22,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { registerSchema } from "../../lib/zod";
-import { registerAction } from "@/actions/auth";
+} from '../ui/form';
+import { Input } from '../ui/input';
+import type { z } from 'zod';
 
-export const RegisterForm = () => {
+export const RegisterForm = (): JSX.Element => {
   const [error, setError] = useState<string | null>();
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -35,12 +34,14 @@ export const RegisterForm = () => {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
+  const onSubmit = async (
+    values: z.infer<typeof registerSchema>,
+  ): Promise<void> => {
     setError(null);
 
     startTransition(async () => {
@@ -49,7 +50,7 @@ export const RegisterForm = () => {
       if (response?.error) {
         setError(response.error);
       } else {
-        router.push("/");
+        router.push('/');
       }
     });
   };
@@ -111,7 +112,7 @@ export const RegisterForm = () => {
           </form>
         </Form>
         <div className="mt-4 text-center text-sm">
-          Already have an account?{" "}
+          Already have an account?{' '}
           <Link href="/auth/login" className="underline">
             Sign-in
           </Link>

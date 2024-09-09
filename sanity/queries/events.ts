@@ -1,7 +1,10 @@
-import { defineQuery } from "next-sanity";
-import { client } from "../lib/client";
-import { EventsQueryResult } from "../types/types";
+import { defineQuery } from 'next-sanity';
+import { client } from '../lib/client';
+import type { EventsQueryResult } from '../types/types';
 
-const eventsQuery = defineQuery(`*[_type == "event"]{_id, title, slug, image, description, timestamp, location}`);
+const eventsQuery = defineQuery(
+  `*[_type == "event"]{_id, title, slug, image, description, timestamp, location}`,
+);
 
-export const getEvents = (): Promise<EventsQueryResult> => client.fetch(eventsQuery);
+export const getEvents = (): Promise<EventsQueryResult> =>
+  client.fetch(eventsQuery);

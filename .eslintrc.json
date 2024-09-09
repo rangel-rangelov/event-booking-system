@@ -1,3 +1,75 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:tailwindcss/recommended"
+  ],
+  "plugins": [
+    "@stylistic/ts"
+  ],
+  "rules": {
+    "import/default": "error",
+    "import/first": "error",
+    "import/named": "error",
+    "import/newline-after-import": ["warn", { "count": 1 }],
+    "import/no-useless-path-segments": "warn",
+    "import/no-absolute-path": "warn",
+    "import/order": [
+      "warn", {
+        "groups": ["external", "internal", "builtin", "parent", "sibling", "type", "index", "unknown"],
+        "newlines-between": "never",
+        "warnOnUnassignedImports": true,
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ],
+    "import/no-default-export": "error",
+    "no-console": "warn",
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
+    "key-spacing": ["warn", {
+      "beforeColon": false
+    }],
+    "react/function-component-definition": ["error", {
+      "namedComponents": "arrow-function",
+      "unnamedComponents": "arrow-function"
+    }],
+    "padding-line-between-statements": ["error", {
+      "blankLine": "always",
+      "prev": ["const", "let", "var"],
+      "next": "*"
+    },
+    {
+      "blankLine": "any",
+      "prev": ["const", "let", "var"],
+      "next": ["const", "let", "var"]
+    }],
+    "@typescript-eslint/array-type": "error",
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "@typescript-eslint/no-empty-function": "error",
+    "@stylistic/ts/type-annotation-spacing": ["error", {
+      "before": true, "after": true, "overrides": {
+        "colon": { "before": false, "after": true }}
+    }],
+    "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@stylistic/ts/member-delimiter-style": "error",
+    "@typescript-eslint/typedef": ["error", {
+      "arrowParameter": false,
+      "memberVariableDeclaration": true,
+      "parameter": true,
+      "propertyDeclaration": true
+    }]
+  },
+  "overrides": [
+    {
+      "files": ["app/**/{page,layout,not-found}.tsx", "sanity.*.ts", "tailwind.config.ts", "postcss.config.mjs"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "sanity/types/types.ts"
+  ]
 }
