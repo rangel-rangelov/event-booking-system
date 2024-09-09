@@ -99,7 +99,7 @@ export const LoginForm = () => {
         </Form>
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
-          <Link href="/auth/sign-in" className="underline">
+          <Link href="/auth/register" className="underline">
             Sign-in
           </Link>
         </div>
