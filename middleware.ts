@@ -5,14 +5,19 @@ import authConfig from './auth.config';
 
 const { auth: middleware } = NextAuth(authConfig);
 
-const PUBLIC_ROUTES = ['/auth/login', '/auth/register'];
-const ADMIN_ROUTES = ['/studio'];
+const AUTH_ROUTES = ['/auth/login', '/auth/register'];
+const PUBLIC_ROUTES = [...AUTH_ROUTES];
+const ADMIN_ROUTES = ['/studio', '/dashboard/users'];
 
 export default middleware(req => {
   const { nextUrl, auth } = req;
 
   const isLoggedIn = !!auth?.user;
   const isAdmin = auth?.user.role === Role.ADMIN;
+
+  if (AUTH_ROUTES.includes(nextUrl.pathname) && isLoggedIn) {
+    return NextResponse.redirect(new URL('/', nextUrl));
+  }
 
   if (!PUBLIC_ROUTES.includes(nextUrl.pathname) && !isLoggedIn) {
     return NextResponse.redirect(new URL('/auth/login', nextUrl));
