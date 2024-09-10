@@ -1,5 +1,6 @@
 import { PlusCircle } from 'lucide-react';
-import { EventRow } from '@/components/organisms/event-row';
+import { auth } from '@/auth';
+import { EventsTable } from '@/components/organisms/events-table';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -8,23 +9,46 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { prisma } from '@/lib/prisma';
+import { getUserEvents } from '@/sanity/queries/events';
+import type { Event } from '@/sanity/types/types';
 
-const HomePage = async (): Promise<JSX.Element> => {
+// TODO: Move this
+const getEvents = async (): Promise<Event[]> => {
+  const session = await auth();
+
+  if (session?.user.id) {
+    const dbEvents = await prisma.event.findMany({
+      where: {
+        authorId: Number(session?.user.id),
+      },
+    });
+
+    const eventSanityIds = dbEvents.map(event => event.sanityId);
+    const events = await getUserEvents(eventSanityIds);
+
+    return events || [];
+  }
+
+  return [];
+};
+
+const Events = async (): Promise<JSX.Element> => {
+  const events = await getEvents();
+  const now = new Date();
+  const pastEvents = events.filter(event => new Date(event.timestamp) < now);
+  const upcomingEvents = events.filter(
+    event => new Date(event.timestamp) > now,
+  );
+
   return (
     <Tabs defaultValue="all">
       <div className="flex items-center">
         <TabsList>
           <TabsTrigger value="all">All</TabsTrigger>
-          <TabsTrigger value="active">Past</TabsTrigger>
-          <TabsTrigger value="draft">Incoming</TabsTrigger>
+          <TabsTrigger value="past">Past</TabsTrigger>
+          <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
         </TabsList>
         <div className="ml-auto flex items-center gap-2">
           <Button size="sm" className="h-8 gap-1">
@@ -40,32 +64,53 @@ const HomePage = async (): Promise<JSX.Element> => {
           <CardHeader>
             <CardTitle>Events</CardTitle>
             <CardDescription>
-              Manage your events and create new ones.
+              Manage all your events and create new ones.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="hidden w-[100px] sm:table-cell">
-                    <span className="sr-only">Image</span>
-                  </TableHead>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead className="hidden md:table-cell">When</TableHead>
-                  <TableHead className="hidden md:table-cell">Where</TableHead>
-                  <TableHead className="hidden md:table-cell">
-                    Created at
-                  </TableHead>
-                  <TableHead>
-                    <span className="sr-only">Actions</span>
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <EventRow />
-              </TableBody>
-            </Table>
+            {events.length ? (
+              <EventsTable events={events} />
+            ) : (
+              <p className="text-sm">
+                No events to display. Go ahead and create one!
+              </p>
+            )}
+          </CardContent>
+        </Card>
+      </TabsContent>
+      <TabsContent value="past">
+        <Card x-chunk="dashboard-06-chunk-0">
+          <CardHeader>
+            <CardTitle>Events</CardTitle>
+            <CardDescription>
+              Manage your past events and create new ones.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {pastEvents.length ? (
+              <EventsTable events={pastEvents} />
+            ) : (
+              <p className="text-sm">No past events to display.</p>
+            )}
+          </CardContent>
+        </Card>
+      </TabsContent>
+      <TabsContent value="incoming">
+        <Card x-chunk="dashboard-06-chunk-0">
+          <CardHeader>
+            <CardTitle>Events</CardTitle>
+            <CardDescription>
+              Manage your incoming events and create new ones.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {upcomingEvents.length ? (
+              <EventsTable events={upcomingEvents} />
+            ) : (
+              <p className="text-sm">
+                No upcoming events to display. Go ahead and create one!
+              </p>
+            )}
           </CardContent>
         </Card>
       </TabsContent>
@@ -73,4 +118,4 @@ const HomePage = async (): Promise<JSX.Element> => {
   );
 };
 
-export default HomePage;
+export default Events;

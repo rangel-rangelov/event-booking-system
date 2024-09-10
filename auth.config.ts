@@ -49,7 +49,10 @@ export default {
       if (user) {
         // eslint-disable-next-line no-param-reassign
         token.role = user.role;
+        // eslint-disable-next-line no-param-reassign
+        token.id = user.id || '';
       }
+
       return token;
     },
     // eslint-disable-next-line @typescript-eslint/typedef, @typescript-eslint/explicit-function-return-type
@@ -57,6 +60,8 @@ export default {
       if (token) {
         // eslint-disable-next-line no-param-reassign
         session.user.role = token.role;
+        // eslint-disable-next-line no-param-reassign
+        session.user.id = token.id;
       }
       return session;
     },

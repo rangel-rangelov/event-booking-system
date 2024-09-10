@@ -1,6 +1,7 @@
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { MoreHorizontal } from 'lucide-react';
 import Image from 'next/image';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -10,25 +11,51 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { TableRow, TableCell } from '@/components/ui/table';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { urlFor } from '@/sanity/lib/image';
+import type { Event } from '@/sanity/types/types';
 
-export const EventRow = (): JSX.Element => {
+interface Props {
+  event: Event;
+}
+
+export const EventRow = ({ event }: Props): JSX.Element => {
+  dayjs.extend(localizedFormat);
+
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
         <Image
-          alt="Event image"
+          alt={event.image?.description || 'Event image'}
           className="aspect-square rounded-md object-cover"
           height="64"
-          src="/placeholder.svg"
+          src={event.image ? urlFor(event.image).url() : 'placeholder.svg'}
           width="64"
         />
       </TableCell>
-      <TableCell className="font-medium">Ed Sheeran Concert</TableCell>
-      <TableCell>Desc</TableCell>
-      <TableCell className="hidden md:table-cell">23.11.2024</TableCell>
-      <TableCell className="hidden md:table-cell">London, O2 Arena</TableCell>
-      <TableCell className="hidden md:table-cell">
-        2023-07-12 10:42 AM
+      <TableCell className="font-medium">{event.title}</TableCell>
+      <TableCell>{dayjs(event.timestamp).format('lll')}</TableCell>
+      <TableCell className="hidden lg:table-cell">
+        {event.description && event.description.length >= 20 ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span>{`${event.description?.substring(0, 20)}...`}</span>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-60">
+              {event.description}
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          event.description || 'No description'
+        )}
+      </TableCell>
+      <TableCell className="hidden md:table-cell">{event.location}</TableCell>
+      <TableCell className="hidden lg:table-cell">
+        {dayjs(event._createdAt).format('lll')}
       </TableCell>
       <TableCell>
         <DropdownMenu>

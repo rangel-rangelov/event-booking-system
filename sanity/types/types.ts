@@ -14,7 +14,7 @@
 
 // Source: schema.json
 export type SanityImagePaletteSwatch = {
-  _type: "sanity.imagePaletteSwatch";
+  _type: 'sanity.imagePaletteSwatch';
   background?: string;
   foreground?: string;
   population?: number;
@@ -22,7 +22,7 @@ export type SanityImagePaletteSwatch = {
 };
 
 export type SanityImagePalette = {
-  _type: "sanity.imagePalette";
+  _type: 'sanity.imagePalette';
   darkMuted?: SanityImagePaletteSwatch;
   lightVibrant?: SanityImagePaletteSwatch;
   darkVibrant?: SanityImagePaletteSwatch;
@@ -33,7 +33,7 @@ export type SanityImagePalette = {
 };
 
 export type SanityImageDimensions = {
-  _type: "sanity.imageDimensions";
+  _type: 'sanity.imageDimensions';
   height?: number;
   width?: number;
   aspectRatio?: number;
@@ -41,7 +41,7 @@ export type SanityImageDimensions = {
 
 export type SanityFileAsset = {
   _id: string;
-  _type: "sanity.fileAsset";
+  _type: 'sanity.fileAsset';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -62,7 +62,7 @@ export type SanityFileAsset = {
 };
 
 export type Geopoint = {
-  _type: "geopoint";
+  _type: 'geopoint';
   lat?: number;
   lng?: number;
   alt?: number;
@@ -70,7 +70,7 @@ export type Geopoint = {
 
 export type Event = {
   _id: string;
-  _type: "event";
+  _type: 'event';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -79,14 +79,14 @@ export type Event = {
   image?: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     description?: string;
-    _type: "image";
+    _type: 'image';
   };
   description?: string;
   timestamp: string;
@@ -94,7 +94,7 @@ export type Event = {
 };
 
 export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
+  _type: 'sanity.imageCrop';
   top?: number;
   bottom?: number;
   left?: number;
@@ -102,7 +102,7 @@ export type SanityImageCrop = {
 };
 
 export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
+  _type: 'sanity.imageHotspot';
   x?: number;
   y?: number;
   height?: number;
@@ -111,7 +111,7 @@ export type SanityImageHotspot = {
 
 export type SanityImageAsset = {
   _id: string;
-  _type: "sanity.imageAsset";
+  _type: 'sanity.imageAsset';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -133,14 +133,14 @@ export type SanityImageAsset = {
 };
 
 export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
+  _type: 'sanity.assetSourceData';
   name?: string;
   id?: string;
   url?: string;
 };
 
 export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
+  _type: 'sanity.imageMetadata';
   location?: Geopoint;
   dimensions?: SanityImageDimensions;
   palette?: SanityImagePalette;
@@ -151,14 +151,26 @@ export type SanityImageMetadata = {
 };
 
 export type Slug = {
-  _type: "slug";
+  _type: 'slug';
   current: string;
   source?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Event | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
+export type AllSanitySchemaTypes =
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityFileAsset
+  | Geopoint
+  | Event
+  | SanityImageCrop
+  | SanityImageHotspot
+  | SanityImageAsset
+  | SanityAssetSourceData
+  | SanityImageMetadata
+  | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/sanity/queries/events.ts
+// Source: sanity/queries/events.ts
 // Variable: eventsQuery
 // Query: *[_type == "event"]{_id, title, slug, image, description, timestamp, location}
 export type EventsQueryResult = Array<{
@@ -168,24 +180,51 @@ export type EventsQueryResult = Array<{
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     description?: string;
-    _type: "image";
+    _type: 'image';
   } | null;
   description: string | null;
   timestamp: string;
   location: string;
 }>;
+// Variable: userEventsQuery
+// Query: *[_type == "event" && _id in $postIds]
+export type UserEventsQueryResult = Array<{
+  _id: string;
+  _type: 'event';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    description?: string;
+    _type: 'image';
+  };
+  description?: string;
+  timestamp: string;
+  location: string;
+}>;
 
 // Query TypeMap
-import "@sanity/client";
-declare module "@sanity/client" {
+import '@sanity/client';
+declare module '@sanity/client' {
   interface SanityQueries {
-    "*[_type == \"event\"]{_id, title, slug, image, description, timestamp, location}": EventsQueryResult;
+    '*[_type == "event"]{_id, title, slug, image, description, timestamp, location}': EventsQueryResult;
+    '*[_type == "event" && _id in $postIds]': UserEventsQueryResult;
   }
 }
