@@ -1,5 +1,6 @@
-import { PlusCircle } from 'lucide-react';
+import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
+import { CreateEventButton } from '@/components/atoms/create-event-button';
 import { EventsTable } from '@/components/organisms/events-table';
 import { Button } from '@/components/ui/button';
 import {
@@ -51,12 +52,7 @@ const Events = async (): Promise<JSX.Element> => {
           <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
         </TabsList>
         <div className="ml-auto flex items-center gap-2">
-          <Button size="sm" className="h-8 gap-1">
-            <PlusCircle className="size-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Add Event
-            </span>
-          </Button>
+          <CreateEventButton />
         </div>
       </div>
       <TabsContent value="all">

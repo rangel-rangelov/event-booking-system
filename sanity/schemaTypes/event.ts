@@ -39,7 +39,7 @@ export const eventSchema = defineType({
     defineField({
       name: 'timestamp',
       title: 'When',
-      type: 'datetime',
+      type: 'date',
       validation: rule => rule.required(),
     }),
     defineField({

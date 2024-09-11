@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { MoreHorizontal } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -38,7 +39,7 @@ export const EventRow = ({ event }: Props): JSX.Element => {
         />
       </TableCell>
       <TableCell className="font-medium">{event.title}</TableCell>
-      <TableCell>{dayjs(event.timestamp).format('lll')}</TableCell>
+      <TableCell>{dayjs(event.timestamp).format('LL')}</TableCell>
       <TableCell className="hidden lg:table-cell">
         {event.description && event.description.length >= 20 ? (
           <Tooltip>
@@ -67,7 +68,9 @@ export const EventRow = ({ event }: Props): JSX.Element => {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/dashboard/events/edit/`}>Edit</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
