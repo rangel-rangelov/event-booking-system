@@ -3,18 +3,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { PlusCircle } from 'lucide-react';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { createUserEvent } from '@/actions/events';
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
 import {
   Dialog,
   DialogContent,
@@ -23,12 +17,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { PlusCircle } from 'lucide-react';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
@@ -36,10 +31,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Event } from '@/sanity/types/types';
-import { createUserEvent } from '@/actions/events';
-import { useState, useTransition } from 'react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
+import type { Event } from '@/sanity/types/types';
 
 interface Props {
   events: Event[];
@@ -62,7 +60,6 @@ export const AddEvent = ({ events }: Props): JSX.Element => {
   });
 
   const onSubmit = (data: z.infer<typeof FormSchema>): void => {
-    console.log(form.getValues());
     setError(null);
 
     startTransition(async () => {
@@ -88,7 +85,7 @@ export const AddEvent = ({ events }: Props): JSX.Element => {
           <TooltipTrigger asChild>
             <Button
               size="sm"
-              className="h-8 gap-1 !pointer-events-auto"
+              className="!pointer-events-auto h-8 gap-1"
               disabled={!events.length}>
               <PlusCircle className="size-3.5" />
               Add event
@@ -103,7 +100,7 @@ export const AddEvent = ({ events }: Props): JSX.Element => {
         <DialogTrigger asChild>
           <Button
             size="sm"
-            className="h-8 gap-1 !pointer-events-auto"
+            className="!pointer-events-auto h-8 gap-1"
             disabled={!events.length}>
             <PlusCircle className="size-3.5" />
             Add event

@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export const AccountDropdown = (): JSX.Element => {
-  const logoutHandler = async () => {
+  const logoutHandler = async (): Promise<void> => {
     await signOut({
       callbackUrl: '/auth/login',
     });

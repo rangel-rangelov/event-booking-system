@@ -1,9 +1,9 @@
 import { TooltipProvider } from '@radix-ui/react-tooltip';
 import { Inter } from 'next/font/google';
+import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 import type { Metadata } from 'next';
 import type { PropsWithChildren } from 'react';
-import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
 

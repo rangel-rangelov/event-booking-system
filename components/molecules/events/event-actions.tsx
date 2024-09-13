@@ -12,7 +12,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import {
   DropdownMenu,
@@ -36,7 +35,7 @@ export const EventActions = ({
 }: Props): JSX.Element => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-  const deleteEvent = async (id: string) => {
+  const deleteEvent = async (id: string): Promise<void> => {
     const res = await deleteUserEvent(id);
 
     if (res.success) {

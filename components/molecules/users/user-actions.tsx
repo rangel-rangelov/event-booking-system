@@ -40,7 +40,7 @@ interface Props {
 export const UserActions = ({ userEvents }: Props): JSX.Element => {
   const [userEventsDialogOpen, setUserEventsDialogOpen] = useState(false);
 
-  const deleteEvent = async (id: string) => {
+  const deleteEvent = async (id: string): Promise<void> => {
     const res = await deleteUserEvent(id);
 
     if (res.success) {

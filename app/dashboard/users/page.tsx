@@ -11,8 +11,6 @@ import {
 const Events = async (): Promise<JSX.Element> => {
   const users = await getAllUsers();
 
-  console.log({ users });
-
   return (
     <Card x-chunk="dashboard-06-chunk-0">
       <CardHeader>

@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Event } from '@/sanity/types/types';
+import type { Event } from '@/sanity/types/types';
 
 const Events = async (): Promise<JSX.Element> => {
   const events = await getUserMappedEvents();

@@ -1,7 +1,4 @@
-import { Search } from 'lucide-react';
 import { MobileNavigation } from '@/components/global/mobile-navigation';
-import { AccountDropdown } from '@/components/organisms/account-dropdown';
-import { Input } from '@/components/ui/input';
 
 export const Header = (): JSX.Element => {
   return (

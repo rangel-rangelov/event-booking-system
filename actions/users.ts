@@ -36,7 +36,7 @@ export const getUserEvents = async (userId: number): Promise<MappedEvent[]> => {
       },
     });
 
-    return mapEvents(userDbEvents);
+    return await mapEvents(userDbEvents);
   }
 
   return [];

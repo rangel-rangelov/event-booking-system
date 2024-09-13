@@ -101,7 +101,7 @@ export const deleteUserEvent = async (
   }
 };
 
-export const mapEvents = async (dbEvents: Event[]) => {
+export const mapEvents = async (dbEvents: Event[]): Promise<MappedEvent[]> => {
   const eventSanityIds = dbEvents.map(event => event.sanityId);
   let events = await getUserEvents(eventSanityIds);
 
