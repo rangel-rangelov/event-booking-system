@@ -1,6 +1,6 @@
 import { getUserMappedEvents, getUserNotAddedEvents } from '@/actions/events';
-import { AddEvent } from '@/components/organisms/add-event';
-import { EventsTable } from '@/components/organisms/events-table';
+import { AddEvent } from '@/components/organisms/events/add-event';
+import { EventsTable } from '@/components/organisms/events/events-table';
 import {
   Card,
   CardContent,

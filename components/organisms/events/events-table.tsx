@@ -1,4 +1,4 @@
-import { EventRow } from '@/components/organisms/event-row';
+import { EventRow } from '@/components/molecules/events/event-row';
 import {
   Table,
   TableBody,
@@ -6,10 +6,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import type { Event } from '@/sanity/types/types';
+import type { MappedEvent } from '@/actions/events';
 
 interface Props {
-  events: Event[];
+  events: MappedEvent[];
 }
 
 export const EventsTable = ({ events }: Props): JSX.Element => {

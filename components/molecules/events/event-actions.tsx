@@ -1,18 +1,11 @@
 'use client';
 
-import Link from 'next/link';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import { MoreHorizontal } from 'lucide-react';
 import { Role } from '@prisma/client';
+import { MoreHorizontal } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
 import { deleteUserEvent } from '@/actions/events';
-import { toast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -21,7 +14,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { useState } from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { toast } from '@/hooks/use-toast';
 
 interface Props {
   eventId: string;
@@ -85,7 +85,9 @@ export const EventActions = ({
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you you want to delete this event?</DialogTitle>
+            <DialogTitle>
+              Are you sure you want to delete this event?
+            </DialogTitle>
             <DialogDescription className="!mb-4">
               Please confirm you want to delete this event.
             </DialogDescription>

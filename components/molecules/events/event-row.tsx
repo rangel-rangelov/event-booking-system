@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import Image from 'next/image';
+import { auth } from '@/auth';
+import { EventActions } from '@/components/molecules/events/event-actions';
 import { TableRow, TableCell } from '@/components/ui/table';
 import {
   Tooltip,
@@ -8,10 +10,8 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { urlFor } from '@/sanity/lib/image';
-import { EventActions } from '../molecules/event-actions';
-import { auth } from '@/auth';
-import { Role } from '@prisma/client';
-import { MappedEvent } from '@/actions/events';
+import type { MappedEvent } from '@/actions/events';
+import type { Role } from '@prisma/client';
 
 interface Props {
   event: MappedEvent;
@@ -19,6 +19,7 @@ interface Props {
 
 export const EventRow = async ({ event }: Props): Promise<JSX.Element> => {
   const session = await auth();
+
   dayjs.extend(localizedFormat);
 
   return (
