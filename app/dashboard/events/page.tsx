@@ -1,8 +1,6 @@
-import { redirect } from 'next/navigation';
-import { auth } from '@/auth';
-import { CreateEventButton } from '@/components/atoms/create-event-button';
+import { getUserMappedEvents, getUserNotAddedEvents } from '@/actions/events';
+import { AddEvent } from '@/components/organisms/add-event';
 import { EventsTable } from '@/components/organisms/events-table';
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -11,32 +9,11 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { prisma } from '@/lib/prisma';
-import { getUserEvents } from '@/sanity/queries/events';
-import type { Event } from '@/sanity/types/types';
-
-// TODO: Move this
-const getEvents = async (): Promise<Event[]> => {
-  const session = await auth();
-
-  if (session?.user.id) {
-    const dbEvents = await prisma.event.findMany({
-      where: {
-        authorId: Number(session?.user.id),
-      },
-    });
-
-    const eventSanityIds = dbEvents.map(event => event.sanityId);
-    const events = await getUserEvents(eventSanityIds);
-
-    return events || [];
-  }
-
-  return [];
-};
+import { Event } from '@/sanity/types/types';
 
 const Events = async (): Promise<JSX.Element> => {
-  const events = await getEvents();
+  const events = await getUserMappedEvents();
+  const userNotAddedEvents = await getUserNotAddedEvents();
   const now = new Date();
   const pastEvents = events.filter(event => new Date(event.timestamp) < now);
   const upcomingEvents = events.filter(
@@ -45,22 +22,20 @@ const Events = async (): Promise<JSX.Element> => {
 
   return (
     <Tabs defaultValue="all">
-      <div className="flex items-center">
+      <div className="flex items-center justify-between">
         <TabsList>
           <TabsTrigger value="all">All</TabsTrigger>
           <TabsTrigger value="past">Past</TabsTrigger>
           <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
         </TabsList>
-        <div className="ml-auto flex items-center gap-2">
-          <CreateEventButton />
-        </div>
+        <AddEvent events={userNotAddedEvents as Event[]} />
       </div>
       <TabsContent value="all">
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader>
             <CardTitle>Events</CardTitle>
             <CardDescription>
-              Manage all your events and create new ones.
+              Manage all your events and add new ones.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -68,7 +43,7 @@ const Events = async (): Promise<JSX.Element> => {
               <EventsTable events={events} />
             ) : (
               <p className="text-sm">
-                No events to display. Go ahead and create one!
+                No events to display. Go ahead and add one!
               </p>
             )}
           </CardContent>
@@ -79,7 +54,7 @@ const Events = async (): Promise<JSX.Element> => {
           <CardHeader>
             <CardTitle>Events</CardTitle>
             <CardDescription>
-              Manage your past events and create new ones.
+              Manage your past events and add new ones.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -91,12 +66,12 @@ const Events = async (): Promise<JSX.Element> => {
           </CardContent>
         </Card>
       </TabsContent>
-      <TabsContent value="incoming">
+      <TabsContent value="upcoming">
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader>
             <CardTitle>Events</CardTitle>
             <CardDescription>
-              Manage your incoming events and create new ones.
+              Manage your incoming events and add new ones.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -104,7 +79,7 @@ const Events = async (): Promise<JSX.Element> => {
               <EventsTable events={upcomingEvents} />
             ) : (
               <p className="text-sm">
-                No upcoming events to display. Go ahead and create one!
+                No upcoming events to display. Go ahead and add one!
               </p>
             )}
           </CardContent>

@@ -1,16 +1,6 @@
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
-import { MoreHorizontal } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { TableRow, TableCell } from '@/components/ui/table';
 import {
   Tooltip,
@@ -18,13 +8,17 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { urlFor } from '@/sanity/lib/image';
-import type { Event } from '@/sanity/types/types';
+import { EventActions } from '../molecules/event-actions';
+import { auth } from '@/auth';
+import { Role } from '@prisma/client';
+import { MappedEvent } from '@/actions/events';
 
 interface Props {
-  event: Event;
+  event: MappedEvent;
 }
 
-export const EventRow = ({ event }: Props): JSX.Element => {
+export const EventRow = async ({ event }: Props): Promise<JSX.Element> => {
+  const session = await auth();
   dayjs.extend(localizedFormat);
 
   return (
@@ -59,21 +53,11 @@ export const EventRow = ({ event }: Props): JSX.Element => {
         {dayjs(event._createdAt).format('lll')}
       </TableCell>
       <TableCell>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button aria-haspopup="true" size="icon" variant="ghost">
-              <MoreHorizontal className="size-4" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>
-              <Link href={`/dashboard/events/edit/`}>Edit</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <EventActions
+          eventId={event.id}
+          sanityEventId={event._id}
+          userRole={session?.user.role as Role}
+        />
       </TableCell>
     </TableRow>
   );
