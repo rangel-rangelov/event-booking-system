@@ -21,11 +21,11 @@ export const loginAction = async (
 
     return { success: true };
   } catch (error) {
-    console.log(error);
     if (error instanceof AuthError) {
       return { error: error.cause?.err?.message };
     }
 
+    return { error: "We couldn't log you at this time, please try later" };
   }
 };
 

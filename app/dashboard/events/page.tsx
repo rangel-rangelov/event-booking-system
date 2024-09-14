@@ -47,16 +47,17 @@ const Events = (): JSX.Element => {
       },
     );
 
-    const fetchEvents = async () => {
+    const fetchEvents = async (): Promise<void> => {
       await getUserMappedEventsAction();
       await getUserNotAddedEventsAction();
     };
 
     fetchEvents();
 
-    return () => {
+    return (): void => {
       pusherClient.unsubscribe('events-channel');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

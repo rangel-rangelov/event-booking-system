@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import Image from 'next/image';
-import { auth } from '@/auth';
+import { useSession } from 'next-auth/react';
 import { EventActions } from '@/components/molecules/events/event-actions';
 import { TableRow, TableCell } from '@/components/ui/table';
 import {
@@ -12,7 +12,6 @@ import {
 import { urlFor } from '@/sanity/lib/image';
 import type { MappedEvent } from '@/actions/events';
 import type { Role } from '@prisma/client';
-import { useSession } from 'next-auth/react';
 
 interface Props {
   event: MappedEvent;
