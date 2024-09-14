@@ -7,7 +7,7 @@ import { PlusCircle } from 'lucide-react';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { createUserEvent } from '@/actions/events';
+import { createUserEventAction } from '@/actions/events';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -63,7 +63,7 @@ export const AddEvent = ({ events }: Props): JSX.Element => {
     setError(null);
 
     startTransition(async () => {
-      const res = await createUserEvent(data.eventId);
+      const res = await createUserEventAction(data.eventId);
 
       if (res.error) {
         setError(res.error);

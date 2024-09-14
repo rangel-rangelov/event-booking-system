@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
-import { getUserEvents, type PublicUser } from '@/actions/users';
+import { getUserEventsAction, type PublicUser } from '@/actions/users';
 import { UserActions } from '@/components/molecules/users/user-actions';
 import { TableCell, TableRow } from '@/components/ui/table';
 
@@ -11,7 +11,7 @@ interface Props {
 export const UserRow = async ({ user }: Props): Promise<JSX.Element> => {
   dayjs.extend(localizedFormat);
 
-  const userEvents = await getUserEvents(user.id);
+  const userEvents = await getUserEventsAction(user.id);
 
   return (
     <TableRow>

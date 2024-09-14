@@ -12,13 +12,14 @@ import {
 import { urlFor } from '@/sanity/lib/image';
 import type { MappedEvent } from '@/actions/events';
 import type { Role } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 
 interface Props {
   event: MappedEvent;
 }
 
-export const EventRow = async ({ event }: Props): Promise<JSX.Element> => {
-  const session = await auth();
+export const EventRow = ({ event }: Props): JSX.Element => {
+  const { data: session } = useSession();
 
   dayjs.extend(localizedFormat);
 

@@ -1,4 +1,4 @@
-import { getAllUsers } from '@/actions/users';
+import { getAllUsersAction } from '@/actions/users';
 import { UsersTable } from '@/components/organisms/users/user-table';
 import {
   Card,
@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/card';
 
 const Events = async (): Promise<JSX.Element> => {
-  const users = await getAllUsers();
+  const users = await getAllUsersAction();
 
   return (
     <Card x-chunk="dashboard-06-chunk-0">

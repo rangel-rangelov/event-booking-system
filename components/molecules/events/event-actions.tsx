@@ -4,7 +4,7 @@ import { Role } from '@prisma/client';
 import { MoreHorizontal } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
-import { deleteUserEvent } from '@/actions/events';
+import { deleteUserEventAction } from '@/actions/events';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -36,7 +36,7 @@ export const EventActions = ({
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const deleteEvent = async (id: string): Promise<void> => {
-    const res = await deleteUserEvent(id);
+    const res = await deleteUserEventAction(id);
 
     if (res.success) {
       toast({

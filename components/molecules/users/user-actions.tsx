@@ -2,7 +2,7 @@
 
 import { MoreHorizontal, X } from 'lucide-react';
 import { useState } from 'react';
-import { deleteUserEvent, type MappedEvent } from '@/actions/events';
+import { deleteUserEventAction, type MappedEvent } from '@/actions/events';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -41,7 +41,7 @@ export const UserActions = ({ userEvents }: Props): JSX.Element => {
   const [userEventsDialogOpen, setUserEventsDialogOpen] = useState(false);
 
   const deleteEvent = async (id: string): Promise<void> => {
-    const res = await deleteUserEvent(id);
+    const res = await deleteUserEventAction(id);
 
     if (res.success) {
       toast({
