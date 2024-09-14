@@ -1,7 +1,22 @@
 [
   {
-    "email": "dummy@email.com",
+    "email": "admin@email.com",
     "password": "asdqwe123",
     "role": "ADMIN"
+  },
+  {
+    "email": "bejamas@email.com",
+    "password": "123qweasd",
+    "role": "ADMIN"
+  },
+  {
+    "email": "user@email.com",
+    "password": "qazwsxedc",
+    "role": "USER"
+  },
+  {
+    "email": "user2@email.com",
+    "password": "edcwsxqaz",
+    "role": "USER"
   }
 ]
