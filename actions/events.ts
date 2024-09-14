@@ -92,7 +92,8 @@ export const createUserEventAction = async (
     await getUserNotAddedEventsAction();
 
     return { success: true };
-  } catch {
+  } catch (e) {
+    console.log(e);
     return { error: "We couldn't add your event, please try again later" };
   }
 };

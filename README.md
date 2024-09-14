@@ -16,7 +16,7 @@ corepack install
 yarn
 ```
 
-4. Make a copy of the `.env` file and rename it to `.env.local`. Then setup your environment variables by filling the listed variables.
+4. Make a copy of the `.env.example` file and rename it to `.env.local`. Then setup your environment variables by filling the listed variables.
 
 5. Make sure to update your type definitions by running:
 
