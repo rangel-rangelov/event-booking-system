@@ -1,9 +1,7 @@
-const DashboardHome = async (): Promise<JSX.Element> => {
-  return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
-      DashboardHome
-    </div>
-  );
+import { redirect } from 'next/navigation';
+
+const DashboardHome = async (): Promise<void> => {
+  redirect('/dashboard/events');
 };
 
 export default DashboardHome;
