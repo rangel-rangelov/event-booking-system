@@ -1,7 +1,7 @@
 FROM node:21.7.3-alpine
 
 WORKDIR /app
-COPY package*.json ./
+COPY package.json yarn.lock ./
 RUN yarn install
 
 COPY . .

@@ -13,15 +13,8 @@ services:
       - "3000:3000"
     volumes:
       - './:/app'
+      - /app/node_modules
+      - /app/.next
     env_file: ./.env.local
     environment:
       - NODE_ENV=development
-    # develop:
-    #   watch:
-    #     - action: sync
-    #       path: ./
-    #       target: ./
-    #       ignore:
-    #         - node_modules/
-    #     - action: rebuild
-    #       path: package.json
